@@ -1,10 +1,13 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Sentry Frontend Preview
+description: Deploys the Sentry frontend to Zeit and creates a deploy associated to the PR
+author: getsentry
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  githubToken:
+    description: Your GITHUB_TOKEN
+  zeitTeamId:
+    description: The team identifier. Found in your .now/project.json
+  zeitToken:
+    description: The auth token for zeit
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: node12
+  main: dist/index.js
