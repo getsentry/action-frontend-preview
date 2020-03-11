@@ -28,7 +28,9 @@
     "@actions/core": "^1.2.0",
     "@actions/github": "^2.1.1",
     "@now/build-utils": "^2.1.1",
+    "@now/frameworks": "^0.0.10",
     "@now/routing-utils": "^1.7.0",
+    "@types/glob": "^7.1.1",
     "@types/node-fetch": "^2.5.5",
     "now-client": "^7.0.0"
   },

@@ -10,4 +10,4 @@ inputs:
     description: The auth token for zeit
 runs:
   using: node12
-  main: dist/index.js
+  main: lib/index.js
