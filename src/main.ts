@@ -36,7 +36,7 @@ async function run(): Promise<void> {
 
   const pr = await client.pulls.get({
     ...github.context.repo,
-    number: github.context.payload.pull_request.number,
+    pull_number: github.context.payload.pull_request.number,
   });
 
   const ghDeploy = await client.repos.createDeployment({
@@ -45,6 +45,7 @@ async function run(): Promise<void> {
     transient_environment: true,
     ref: pr.data.head.ref,
     description: 'Zeit frontend build preview',
+    required_contexts: [],
   });
 
   for await (const event of createDeployment(nowConfig, nowDeploy)) {
