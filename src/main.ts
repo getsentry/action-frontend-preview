@@ -10,6 +10,7 @@ async function run(): Promise<void> {
 
   const nowConfig: NowClientOptions = {
     token: core.getInput('zeitToken'),
+    teamId: core.getInput('zeitTeamId'),
     path: process.env['GITHUB_WORKSPACE'] as string,
   };
 
@@ -33,16 +34,23 @@ async function run(): Promise<void> {
     previews: ['flash-preview', 'ant-man-preview'],
   });
 
+  const pr = await client.pulls.get({
+    ...github.context.repo,
+    number: github.context.payload.pull_request.number,
+  });
+
   const ghDeploy = await client.repos.createDeployment({
     ...github.context.repo,
-    environment: 'qa',
+    environment: 'frontend-preview',
     transient_environment: true,
-    ref: github.context.ref,
+    ref: pr.data.head.ref,
     description: 'Zeit frontend build preview',
   });
 
   for await (const event of createDeployment(nowConfig, nowDeploy)) {
-    console.log(event);
+    if (event.type !== 'hashes-calculated') {
+      console.log(event);
+    }
 
     if (event.type == 'created') {
       client.repos.createDeploymentStatus({
